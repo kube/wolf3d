@@ -1,45 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/01/11 01:16:45 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/01/11 22:33:04 by cfeijoo          ###   ########.fr       */
+/*   Created: 2013/12/15 02:14:09 by cfeijoo           #+#    #+#             */
+/*   Updated: 2014/01/06 17:29:21 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <wolf3d.h>
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
+# include <unistd.h>
+# include <stdlib.h>
+# include <math.h>
+# define BUFF_SIZE 128000
 
-static void			display_map(t_map_square ***map)
+int					get_next_line(int fd, char **line);
+
+typedef struct		s_read
 {
-	int				i;
-	int				j;
+	int				size;
+	int				index;
+	int				fd;
+	char			*read;
+	struct s_read	*next;
+}					t_read;
 
-	i = 0;
-	j = 0;
-	while (map[j])
-	{
-		i = 0;
-		while (map[j][i])
-		{
-			printf("%d ", map[j][i]->type);
-			i++;
-		}
-		printf("\n");
-		j++;
-	}
-}
-
-int					main(int argc, char **argv)
-{
-	t_env			env;
-
-	(void)argc;
-	(void)argv;
-
-	env.map = get_wolf_map("maps/example.wolfmap");
-	display_map(env.map);
-	return (0);
-}
+#endif /* !GET_NEXT_LINE_H */

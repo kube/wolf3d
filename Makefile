@@ -6,44 +6,45 @@
 #    By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2013/12/14 02:31:26 by cfeijoo           #+#    #+#              #
-#    Updated: 2014/01/11 17:16:27 by cfeijoo          ###   ########.fr        #
+#    Updated: 2014/01/11 22:27:28 by cfeijoo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ft_select
+NAME = wolf3d
 
-INCFOLDER = -I./includes -I./libft/includes
-LIBFOLDERS = -L./libft/
-LIBS = -ltermcap -lft
+INCLUDEFOLDERS = -I./includes/ -I./libft/includes/
+LIBFOLDERS = -L./libft/ -L/usr/X11/lib/ -L/usr/X11/include
+LIBS =  -lft -lmlx -lXext -lX11
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-SRC	=	main.c			\
-		selector.c		\
-		cursor.c		\
-		display.c		\
-		keyboard.c		\
-		signals.c		\
-		return.c		\
-		draw.c
+CFILES =	main.c			\
+			get_next_line.c	\
+			get_map.c
 
-OSRC = $(SRC:.c=.o)
+OFILES = $(CFILES:.c=.o)
 
 all: $(NAME)
 
-$(NAME):
-	$(CC) $(CFLAGS) $(INCFOLDER) -c $(SRC)
-	$(CC) $(CFLAGS) $(OSRC) $(LIBFOLDERS) $(LIBS) -o $(NAME)
+$(NAME) :
+	$(CC) -c $(CFILES) $(INCLUDEFOLDERS) $(CFLAGS)
+	$(CC) $(OFILES) $(INCLUDEFOLDERS) $(LIBFOLDERS) $(LIBS) $(CFLAGS) -o $(NAME)
 
-updatelibs:
-	cd libft && git pull
-	make -C libft re
+updatelibs :
+	cd libft/ && git pull
+	make -C libft/ re
+	cd guava/ && git pull
+	make -C guava/ re
 
-clean:
-	rm -f $(OSRC)
+complibs :
+	make -C libft/ re
+	make -C guava/ re
 
-fclean: clean
+clean :
+	rm -f $(OFILES)
+
+fclean : clean
 	rm -f $(NAME)
 
-re: fclean all
+re : fclean all
