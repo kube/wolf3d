@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kube <kube@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/11 01:16:45 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/01/11 22:33:04 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/01/12 02:08:48 by kube             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,9 @@ int					main(int argc, char **argv)
 
 	(void)argc;
 	(void)argv;
+	(void)display_map;
 
-	env.map = get_wolf_map("maps/example.wolfmap");
+	load_map(&env, "maps/example.wolfmap");
 	display_map(env.map);
 	return (0);
 }

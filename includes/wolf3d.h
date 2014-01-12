@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kube <kube@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/11 01:18:07 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/01/11 22:32:12 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/01/12 01:53:53 by kube             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,11 @@ typedef	struct				s_env
 	int						blured;
 	t_pressed_keys			pressed_keys;
 	t_map_square			***map;
-	t_point					center;
+	int						map_height;
+	int						map_width;
+	t_point					position;
 }							t_env;
 
-t_map_square		***get_wolf_map(char *file_name);
+void				load_map(t_env *env, char *file_name);
 
 #endif

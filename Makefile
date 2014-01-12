@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+         #
+#    By: kube <kube@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2013/12/14 02:31:26 by cfeijoo           #+#    #+#              #
-#    Updated: 2014/01/11 22:27:28 by cfeijoo          ###   ########.fr        #
+#    Updated: 2014/01/12 01:58:18 by kube             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 CFILES =	main.c			\
 			get_next_line.c	\
-			get_map.c
+			load_map.c
 
 OFILES = $(CFILES:.c=.o)
 
@@ -34,12 +34,9 @@ $(NAME) :
 updatelibs :
 	cd libft/ && git pull
 	make -C libft/ re
-	cd guava/ && git pull
-	make -C guava/ re
 
 complibs :
 	make -C libft/ re
-	make -C guava/ re
 
 clean :
 	rm -f $(OFILES)
