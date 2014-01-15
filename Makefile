@@ -6,7 +6,7 @@
 #    By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2013/12/14 02:31:26 by cfeijoo           #+#    #+#              #
-#    Updated: 2014/01/13 23:42:15 by cfeijoo          ###   ########.fr        #
+#    Updated: 2014/01/15 16:42:21 by cfeijoo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,8 @@ CFLAGS = -Wall -Wextra -Werror
 
 CFILES =	main.c			\
 			get_next_line.c	\
+			pixel_blend.c	\
+			layer.c			\
 			load_map.c
 
 OFILES = $(CFILES:.c=.o)

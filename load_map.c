@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kube <kube@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/11 16:10:50 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/01/12 02:08:27 by kube             ###   ########.fr       */
+/*   Updated: 2014/01/15 14:31:40 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ static void			store_map_lines(t_env *env, int file,
 	y = 0;
 	while (y < env->map_height && get_next_line(file, &line))
 	{
-		*map_data = (t_map_square**)malloc((env->map_width + 1) * sizeof(t_map_square*));
+		*map_data = (t_map_square**)malloc((env->map_width + 1)
+			* sizeof(t_map_square*));
 		store_map_points(*map_data, line);
 		y++;
 		map_data++;
@@ -84,7 +85,8 @@ void				load_map(t_env *env, char *file_name)
 	file = open(file_name, O_RDONLY);
 	env->map_height = get_next_int(file);
 	env->map_width = get_next_int(file);
-	map_data = (t_map_square***)malloc((env->map_height + 1) * sizeof(t_map_square**));
+	map_data = (t_map_square***)malloc((env->map_height + 1)
+		* sizeof(t_map_square**));
 	store_map_lines(env, file, map_data);
 	env->position.x = (float)get_next_int(file);
 	env->position.y = (float)get_next_int(file);

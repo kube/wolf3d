@@ -6,11 +6,13 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/11 01:16:45 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/01/14 22:28:07 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/01/15 19:59:04 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <wolf3d.h>
+#include <color.h>
+#include <layer.h>
 
 static void			display_map(t_map_square ***map)
 {
@@ -52,17 +54,11 @@ int					main(int argc, char **argv)
 		m->win_height = 768;
 	}
 	load_map(&env, "maps/example.wolfmap");
-	display_map(env.map);
-	
 	m->mlx = mlx_init();
-	
 	m->win = mlx_new_window(m->mlx, m->win_width, m->win_height, "42");
 	m->img = mlx_new_image(m->mlx, m->win_width, m->win_height);
-
-	m->data = (int*)mlx_get_data_addr(m->img, &(m->bpp), &(m->size_line), &(m->endian));
-
-	
-	
+	m->data = (int*)mlx_get_data_addr(m->img, &(m->bpp), &(m->size_line),
+		&(m->endian));
 	mlx_loop(m->mlx);
 	return (0);
 }

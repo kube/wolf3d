@@ -6,13 +6,12 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/11 01:18:07 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/01/14 22:28:15 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/01/15 19:43:15 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef WOLF3D_H
 # define WOLF3D_H
-// # include <guava.h>
 # include <libft.h>
 # include <get_next_line.h>
 
@@ -69,11 +68,11 @@ struct						s_params
 {
 	int						blured;
 	int						antialiased;
+	float					perception_angle;
 };
 
 typedef	struct				s_env
 {
-	t_map_square
 	t_map_square			***map;
 	int						map_height;
 	int						map_width;
@@ -83,6 +82,6 @@ typedef	struct				s_env
 	t_point					position;
 }							t_env;
 
-void				load_map(t_env *env, char *file_name);
+void		load_map(t_env *env, char *file_name);
 
 #endif
