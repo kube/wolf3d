@@ -6,12 +6,14 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/14 13:14:47 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/01/15 18:49:15 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/01/16 00:54:37 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LAYER_H
 # define LAYER_H
+
+# include <color.h>
 
 # define NORMAL_BLEND 0
 # define XOR_BLEND 1
@@ -27,7 +29,7 @@ typedef struct			s_layer
 	int					blend_mode;
 	unsigned int		width;
 	unsigned int		height;
-	int					*data;
+	t_pixel				*data;
 	float				opacity;
 }						t_layer;
 

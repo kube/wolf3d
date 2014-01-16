@@ -6,11 +6,16 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/11 16:10:50 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/01/15 14:31:40 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/01/15 21:52:34 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <wolf3d.h>
+#include <stdlib.h>
+#include <get_next_line.h>
+#include <stdio.h>
+#include <fcntl.h>
+#include <libft.h>
 
 static void			store_map_points(t_map_square **map_line, char *line)
 {
@@ -22,7 +27,7 @@ static void			store_map_points(t_map_square **map_line, char *line)
 	i = 0;
 	while (line[i])
 	{
-		square = (t_map_square*)ft_memalloc(sizeof(t_map_square));
+		square = (t_map_square*)malloc(sizeof(t_map_square));
 		while (line[i] && ft_isdigit(line[i]))
 		{
 			square->type += line[i] - '0';

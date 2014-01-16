@@ -6,7 +6,7 @@
 #    By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2013/12/14 02:31:26 by cfeijoo           #+#    #+#              #
-#    Updated: 2014/01/15 16:42:21 by cfeijoo          ###   ########.fr        #
+#    Updated: 2014/01/16 00:02:02 by cfeijoo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ CFILES =	main.c			\
 			get_next_line.c	\
 			pixel_blend.c	\
 			layer.c			\
+			raytracing.c	\
 			load_map.c
 
 OFILES = $(CFILES:.c=.o)

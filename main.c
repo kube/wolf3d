@@ -6,32 +6,38 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/11 01:16:45 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/01/15 19:59:04 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/01/16 01:26:04 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <wolf3d.h>
-#include <color.h>
+#include <libft.h>
+#include <mlx.h>
 #include <layer.h>
+#include <stdio.h>
 
-static void			display_map(t_map_square ***map)
+static void			init_layers(t_env *env)
 {
 	int				i;
-	int				j;
+	t_mlx			*m;
 
 	i = 0;
-	j = 0;
-	while (map[j])
+	m = &env->mlx;
+	while (i < LAYERS_NUMBER)
 	{
-		i = 0;
-		while (map[j][i])
-		{
-			printf("%d ", map[j][i]->type);
-			i++;
-		}
-		printf("\n");
-		j++;
+		env->layers[i] = create_layer(m->win_width,	m->win_height,
+										NORMAL_BLEND);
+		i++;
 	}
+}
+
+static int				expose_hook(t_env *env)
+{
+	ft_putstr("Trace");
+	trace_view(env);
+	apply_layer(&env->mlx, env->layers[1]);
+	mlx_put_image_to_window(env->mlx.mlx, env->mlx.win, env->mlx.img, 0, 0);
+	return (0);
 }
 
 int					main(int argc, char **argv)
@@ -39,9 +45,6 @@ int					main(int argc, char **argv)
 	t_env			env;
 	t_mlx			*m;
 
-	(void)argc;
-	(void)argv;
-	(void)display_map;
 	m = &env.mlx;
 	if (argc == 3)
 	{
@@ -59,6 +62,12 @@ int					main(int argc, char **argv)
 	m->img = mlx_new_image(m->mlx, m->win_width, m->win_height);
 	m->data = (int*)mlx_get_data_addr(m->img, &(m->bpp), &(m->size_line),
 		&(m->endian));
+	init_layers(&env);
+
+	env.view_angle = 0;
+	env.params.fov_angle = 3.14;
+	
+	mlx_loop_hook(env.mlx.mlx, expose_hook, &env);
 	mlx_loop(m->mlx);
 	return (0);
 }
