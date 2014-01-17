@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/15 22:10:36 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/01/16 02:02:24 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/01/17 23:36:10 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,45 +44,66 @@ static float		calc_dst(t_point a, t_point b)
 	return (sqrt(dx * dx + dy * dy));
 }
 
-static void			raytracing(t_env *env, t_point pos, float angle, int i)
+static t_point		get_vector_to_side(t_point pos, float drv_x, float drv_y)
 {
-	float			dy;
 	float			dx;
+	float			dy;
 	float			dst_side_x;
 	float			dst_side_y;
-	float			drv_x;
-	float			drv_y;
+	t_point			to_side;
 
-	drv_x = sin(angle);
-	drv_y = cos(angle);
-	ft_putstr("b");
+	if (drv_y < 0)
+		dx = (int)pos.x - pos.x;
+	else
+		dx = (int)pos.x - pos.x;
+	if (drv_x < 0)
+		dy = (int)pos.y - pos.y;
+	else
+		dy = (int)pos.y - pos.y;
 
+	printf("** %f %f\n", dx, dy);
+	to_side.x = dx;
+	to_side.y = dy;
+	if (drv_x == 0.0)
+	{
+		printf("a\n");
+		to_side.y = 0;
+	}
+	else if (drv_y == 0.0)
+	{
+		printf("b\n");
+		to_side.x = 0;
+	}
+	else
+	{
+		printf("c\n");
+		dst_side_x = sqrt(dx * dx + dy * drv_x * dy * drv_x);
+		dst_side_y = sqrt(dy * dy + dx * drv_y * dx * drv_y);
+		if (dst_side_y < dst_side_x)
+			to_side.x = dx * drv_y;
+		else
+			to_side.y = dy * drv_y;
+	}
+	return (to_side);
+}
+
+static void			raytracing(t_env *env, t_point pos, float angle, int i)
+{
+	t_point			to_side;
+
+	
 	while (1 && env->map[(int)pos.y][(int)pos.x])
 	{
-		ft_putstr("c");
-		dx = (int)pos.x - pos.x + (drv_y > 0);
-		dy = (int)pos.y - pos.y + (drv_x > 0);
+		to_side = get_vector_to_side(pos, sin(angle), cos(angle));
+		pos.x += to_side.x;
+		pos.y += to_side.y;
 
-		printf("// %f %f\n", dx, dy);
-
-		dst_side_y = dy * drv_y;
-		dst_side_y = sqrt(dy * dy + dx * drv_y * dx * drv_y);
-		dst_side_x = dx * drv_x;
-		dst_side_y = sqrt(dx * dx + dy * drv_x * dy * drv_x);
-		if (dst_side_y < dst_side_x)
-		{
-			ft_putstr("d1 ");
-			pos.x += dx * drv_x;
-			pos.y += dy;
-		}
-		else
-		{
-			ft_putstr("d2 ");
-			pos.x += dx;
-			pos.y += dy * drv_y;
-		}
+		printf("%f %f\n", to_side.x, to_side.y);
 		printf("%f %f\n", pos.x, pos.y);
-		if (env->map[(int)pos.y][(int)pos.x]->type)
+
+		// break ;
+
+		if (env->map[(int)pos.y][(int)pos.x]->type == 1)
 		{
 			draw_column(env, calc_dst(env->position, pos), i);
 			break ;
