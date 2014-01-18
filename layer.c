@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/14 17:43:00 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/01/16 01:16:24 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/01/18 22:01:02 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,16 @@
 #include <wolf3d.h>
 #include <color.h>
 
+// TESTS
+#include <strings.h>
+#include <stdio.h>
+
 /*
 **	We'll add other Blend Modes here later
 */
 
 t_layer				*create_layer(unsigned int width, unsigned int height,
-									int blend_mode)
+									int blend_mode, float opacity)
 {
 	t_layer			*layer;
 
@@ -29,11 +33,12 @@ t_layer				*create_layer(unsigned int width, unsigned int height,
 	layer->width = width;
 	layer->height = height;
 	layer->blend_mode = blend_mode;
+	layer->opacity = opacity;
 	layer->data = (t_pixel*)malloc(width * height * sizeof(int));
 	return (layer);
 }
 
-void				apply_layer(t_mlx *mlx, t_layer *layer)
+void				apply_layer(t_mlx *mlx, t_layer *layer, int clear)
 {
 	unsigned int	i;
 	t_pixel			*dst;
@@ -47,6 +52,9 @@ void				apply_layer(t_mlx *mlx, t_layer *layer)
 		dst[i] = blend_pixels(dst + i, src + i, layer->opacity);
 		i++;
 	}
+	(void)clear;
+	if (clear == 1)
+		bzero(layer->data, mlx->win_width * mlx->win_height * 4);
 }
 
 void				layer_pixel_put(t_env *env, t_layer *layer, t_pixel pixel,

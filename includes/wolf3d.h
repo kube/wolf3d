@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/11 01:18:07 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/01/16 01:33:06 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/01/18 22:23:43 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <layer.h>
 
 # define LAYERS_NUMBER 5
-# define WALL_HEIGHT_SCREEN_PROPORTION 40
+# define WALL_HEIGHT_SCREEN_PROPORTION 3
 
 typedef struct				s_point
 {
@@ -83,8 +83,8 @@ typedef	struct				s_env
 
 void		load_map(t_env *env, char *file_name);
 t_layer		*create_layer(unsigned int width, unsigned int height,
-							int blend_mode);
-void		apply_layer(t_mlx *mlx, t_layer *layer);
+							int blend_mode, float opacity);
+void		apply_layer(t_mlx *mlx, t_layer *layer, int clear);
 void		layer_pixel_put(t_env *env, t_layer *layer, t_pixel pixel,
 							unsigned int x, unsigned int y, float opacity);
 void				trace_view(t_env *env);
