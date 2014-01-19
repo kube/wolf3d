@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/11 01:18:07 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/01/18 22:23:43 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/01/19 18:56:39 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <layer.h>
 
 # define LAYERS_NUMBER 5
-# define WALL_HEIGHT_SCREEN_PROPORTION 3
 
 typedef struct				s_point
 {

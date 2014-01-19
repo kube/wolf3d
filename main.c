@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/11 01:16:45 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/01/18 22:19:43 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/01/19 20:30:42 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,35 +15,13 @@
 #include <mlx.h>
 #include <layer.h>
 #include <stdio.h>
-
 #include <math.h>
-
-// TO UPDATE
+#include <strings.h>
 #include "/opt/X11/include/X11/X.h"
 
-// TESTS
-#include <strings.h>
-#include <time.h>
-
-static void				get_fps()
-{
-	static int			i = 0;
-	static float		last_put = 0;
-	float				time_ms;
-
-	i++;
-	time_ms = ((float)clock() / (float)CLOCKS_PER_SEC);
-	if (time_ms - last_put > 1)
-	{
-		printf("%d FPS\n", i);
-		last_put = time_ms;
-		i = 0;
-	}
-}
 
 static int				keypress_hook(int keycode, t_env *env)
 {
-	printf("%d\n", keycode);
 	if (keycode == 65307)
 		exit(0);
 	if (keycode == 65363)
@@ -79,7 +57,7 @@ static void				init_layers(t_env *env)
 	m = &env->mlx;
 	while (i < LAYERS_NUMBER)
 	{
-		env->layers[i] = create_layer(m->win_width,	m->win_height,
+		env->layers[i] = create_layer(m->win_width, m->win_height,
 										NORMAL_BLEND, 0.5);
 		i++;
 	}
@@ -105,7 +83,6 @@ static int				expose_hook(t_env *env)
 	bzero(env->mlx.data, env->mlx.win_width * env->mlx.win_height * 4);
 	apply_layer(&env->mlx, env->layers[1], 1);
 	mlx_put_image_to_window(env->mlx.mlx, env->mlx.win, env->mlx.img, 0, 0);
-	get_fps();
 	return (0);
 }
 
@@ -120,22 +97,14 @@ static t_pressed_keys	init_pressed_keys()
 	return (pressed_keys);
 }
 
-int						main(int argc, char **argv)
+int						main(void)
 {
 	t_env				env;
 	t_mlx				*m;
 
 	m = &env.mlx;
-	if (argc == 3)
-	{
-		m->win_width = ft_atoi(argv[1]);
-		m->win_height = ft_atoi(argv[2]);
-	}
-	else
-	{
-		m->win_width = 1024;
-		m->win_height = 768;
-	}
+	m->win_width = 1024;
+	m->win_height = 768;
 	load_map(&env, "maps/example.wolfmap");
 	m->mlx = mlx_init();
 	env.pressed_keys = init_pressed_keys();
@@ -144,16 +113,10 @@ int						main(int argc, char **argv)
 	m->data = (int*)mlx_get_data_addr(m->img, &(m->bpp), &(m->size_line),
 		&(m->endian));
 	init_layers(&env);
-
-	env.position.x += 0.5;
-	env.position.y += 0.5;
-
-	env.view_angle = 1.0;
+	env.view_angle = 0.0;
 	env.params.fov_angle = 1.0;
-
 	mlx_hook(m->win, KeyPress, KeyPressMask, keypress_hook, &env);
 	mlx_hook(m->win, KeyRelease, KeyReleaseMask, keyrelease_hook, &env);
-
 	mlx_loop_hook(env.mlx.mlx, expose_hook, &env);
 	mlx_loop(m->mlx);
 	return (0);

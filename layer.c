@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/14 17:43:00 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/01/18 22:01:02 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/01/19 20:31:40 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,8 @@
 #include <stdlib.h>
 #include <wolf3d.h>
 #include <color.h>
-
-// TESTS
 #include <strings.h>
 #include <stdio.h>
-
-/*
-**	We'll add other Blend Modes here later
-*/
 
 t_layer				*create_layer(unsigned int width, unsigned int height,
 									int blend_mode, float opacity)
@@ -58,12 +52,13 @@ void				apply_layer(t_mlx *mlx, t_layer *layer, int clear)
 }
 
 void				layer_pixel_put(t_env *env, t_layer *layer, t_pixel pixel,
-									unsigned int x, unsigned int y, float opacity)
+								unsigned int x, unsigned int y, float opacity)
 {
 	unsigned int	i;
 
 	i = env->mlx.win_width * y + x;
 	if (i < env->mlx.win_width * env->mlx.win_height
 		&& x < env->mlx.win_width)
-		layer->data[i] = blend_pixels((t_pixel*)&layer->data[i], &pixel, opacity);
+		layer->data[i] = blend_pixels((t_pixel*)&layer->data[i], &pixel,
+			opacity);
 }
