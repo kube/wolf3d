@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/15 22:10:36 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/01/19 20:28:09 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/01/23 18:59:12 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void			draw_column(t_env *env, float distance, int i, int side)
 
 	j = 0;
 	pixel.color = get_wall_color(env, side);
-	height = env->mlx.win_height / (distance + 1);
+	height = (int)((float)env->mlx.win_height / (distance + 1));
 	while (j < env->mlx.win_height)
 	{
 		if (j > (env->mlx.win_height - height) / 2 &&
@@ -44,70 +44,98 @@ static void			draw_column(t_env *env, float distance, int i, int side)
 	}
 }
 
-static t_point		get_vector_to_side(t_point pos, float drv_x, float drv_y)
-{
-	float			dx;
-	float			dy;
-	float			dst_side_x;
-	float			dst_side_y;
-	t_point			to_side;
+// static t_point		get_vector_to_side(t_point pos, float drv_x, float drv_y)
+// {
+// 	float			dx;
+// 	float			dy;
+// 	float			dst_side_x;
+// 	float			dst_side_y;
+// 	t_point			to_side;
 
-	if (drv_y < 0)
-	{
-		dx = - (pos.x - (int)pos.x);
-		dx -= (dx == 0.0);
-	}
-	else
-		dx = (int)pos.x + 1 - pos.x;
-	if (drv_x < 0)
-	{
-		dy = - (pos.y - (int)pos.y);
-		dy -= (dy == 0.0);
-	}
-	else
-		dy = (int)pos.y + 1 - pos.y;
-	to_side.x = dx;
-	to_side.y = dy;
-	dst_side_x = dx * dx + dx * drv_x * dx * drv_x;
-	dst_side_y = dy * dy + dy * drv_y * dy * drv_y;
-	if (dst_side_y < dst_side_x)
-		to_side.x = dy * drv_y;
-	else
-		to_side.y = dx * drv_x;
-	return (to_side);
+// 	if (drv_y < 0)
+// 	{
+// 		dx = - (pos.x - (int)pos.x);
+// 		dx -= (dx == 0.0);
+// 	}
+// 	else
+// 		dx = (int)pos.x + 1 - pos.x;
+// 	if (drv_x < 0)
+// 	{
+// 		dy = - (pos.y - (int)pos.y);
+// 		dy -= (dy == 0.0);
+// 	}
+// 	else
+// 		dy = (int)pos.y + 1 - pos.y;
+// 	to_side.x = dx;
+// 	to_side.y = dy;
+// 	dst_side_x = dx * dx + dx * drv_x * dx * drv_x;
+// 	dst_side_y = dy * dy + dy * drv_y * dy * drv_y;
+// 	if (dst_side_y < dst_side_x)
+// 		to_side.x = dy * drv_y;
+// 	else
+// 		to_side.y = dx * drv_x;
+// 	return (to_side);
+// }
+
+// static void			raycast(t_env *env, t_point pos, float angle, int i)
+// {
+// 	float			drv_x;
+// 	float			drv_y;
+// 	t_point			to_side;
+// 	float			distance;
+
+// 	distance = 0;
+// 	while (1 && env->map[(int)pos.y][(int)pos.x])
+// 	{
+// 		drv_x = sin(angle);
+// 		drv_y = cos(angle);
+// 		to_side = get_vector_to_side(pos, drv_x, drv_y);
+// 		distance += sqrt(to_side.x * to_side.x + to_side.y * to_side.y);
+// 		pos.x += to_side.x;
+// 		pos.y += to_side.y;
+// 		if (pos.x - (int)pos.x == 0)
+// 		{
+// 			if (env->map[(int)pos.y][(int)pos.x - (drv_y < 0)]->type == 1)
+// 			{
+// 				draw_column(env, distance, i, 1);
+// 				break ;
+// 			}
+// 		}
+// 		else
+// 		{
+// 			if (env->map[(int)pos.y - (drv_x < 0)][(int)pos.x]->type == 1)
+// 			{
+// 				draw_column(env, distance, i, 0);
+// 				break ;
+// 			}
+// 		}
+// 	}
+// }
+
+static void			go_to_side(t_point *pos, float angle)
+{
+	
 }
 
 static void			raycast(t_env *env, t_point pos, float angle, int i)
 {
-	float			drv_x;
-	float			drv_y;
-	t_point			to_side;
+	float			cosa;
+	float			sina;
 	float			distance;
 
 	distance = 0;
+	cosa = cos(angle);
+	sina = sin(angle);
 	while (1 && env->map[(int)pos.y][(int)pos.x])
 	{
-		drv_x = sin(angle);
-		drv_y = cos(angle);
-		to_side = get_vector_to_side(pos, drv_x, drv_y);
-		distance += sqrt(to_side.x * to_side.x + to_side.y * to_side.y);
-		pos.x += to_side.x;
-		pos.y += to_side.y;
-		if (pos.x - (int)pos.x == 0)
+		pos.x += cosa;
+		pos.y += sina;
+		distance += 1;
+		if (env->map[(int)pos.y][(int)pos.x]->type == 1)
 		{
-			if (env->map[(int)pos.y][(int)pos.x - (drv_y < 0)]->type == 1)
-			{
-				draw_column(env, distance, i, 1);
-				break ;
-			}
-		}
-		else
-		{
-			if (env->map[(int)pos.y - (drv_x < 0)][(int)pos.x]->type == 1)
-			{
-				draw_column(env, distance, i, 0);
-				break ;
-			}
+			go_to_side(&pos, angle);
+			draw_column(env, distance, i, 0);
+			break ;
 		}
 	}
 }
